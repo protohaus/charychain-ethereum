@@ -1,0 +1,78 @@
+{
+	"compiler": {
+		"version": "0.8.13+commit.abaa5c0e"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address[]",
+						"name": "_donators",
+						"type": "address[]"
+					}
+				],
+				"name": "enterLottery",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getWinner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/ILottery.sol": "ILottery"
+		},
+		"evmVersion": "london",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/ILottery.sol": {
+			"keccak256": "0x0f0859c45bcfc0f229809e24ded625b197b7948d5cd25888cf5168453d439ef3",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://3945d630fdd55b0335b02204fd1cf4fb742ca409269bf407f6195f38c6a31a5f",
+				"dweb:/ipfs/QmasSPLN9AGTUCM7JfLGuYzYqdY21ZbjuKCLpiSQpKbUkd"
+			]
+		}
+	},
+	"version": 1
+}
