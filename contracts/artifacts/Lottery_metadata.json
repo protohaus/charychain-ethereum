@@ -120,9 +120,9 @@
 			{
 				"inputs": [
 					{
-						"internalType": "bytes20",
+						"internalType": "bytes32",
 						"name": "_test",
-						"type": "bytes20"
+						"type": "bytes32"
 					}
 				],
 				"name": "test",
@@ -173,11 +173,11 @@
 			]
 		},
 		"contracts/Lottery.sol": {
-			"keccak256": "0x68271cf3e44cc74e0a65d1073480cc467f6c08d81a95b28efae891fb4655cc67",
+			"keccak256": "0xcb09bbd3b4e3692cb7b40fd244a2b1767a63d17bb934760b9d9722753e031af7",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://7ca9e458eb1c8db64fb8615302587b52783b32a178921517740751bc7f39b811",
-				"dweb:/ipfs/QmWWUBkF74iNKUQE77LkzGmDVaKe1cXmZr6YEhLoGn4zTv"
+				"bzz-raw://1bc1148dc7f5436e29be0d7991ce584aaf733e49289f9e4a70bfb08663455bab",
+				"dweb:/ipfs/QmQLsezk1UT4PQdmxJSvuqF293qmqop7Uc8djGTkJeDYV4"
 			]
 		}
 	},

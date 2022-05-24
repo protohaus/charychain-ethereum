@@ -48,7 +48,7 @@ contract Lottery is ILottery{
         //require(keccak256(msg.sender, _seed) == sealedSeed); 
         return random; 
     }
-    function test(bytes20 _test) public returns(bool) {
+    function test(bytes32 _test) public returns(bool) {
         //sealedSeed = abi.encodePacked(_test); 
         return true; 
     }
