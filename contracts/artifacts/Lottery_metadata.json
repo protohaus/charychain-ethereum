@@ -1,0 +1,185 @@
+{
+	"compiler": {
+		"version": "0.8.13+commit.abaa5c0e"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "donors",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address[]",
+						"name": "_donators",
+						"type": "address[]"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "_sealedSeed",
+						"type": "bytes32"
+					}
+				],
+				"name": "enterLottery",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "_seed",
+						"type": "bytes32"
+					}
+				],
+				"name": "getWinner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "managerpool",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "_seed",
+						"type": "bytes32"
+					}
+				],
+				"name": "reveal",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "_sealedSeed",
+						"type": "bytes32"
+					}
+				],
+				"name": "setSealedSeed",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes20",
+						"name": "_test",
+						"type": "bytes20"
+					}
+				],
+				"name": "test",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/Lottery.sol": "Lottery"
+		},
+		"evmVersion": "london",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/ILottery.sol": {
+			"keccak256": "0xd5d5c10928ce5e41a880446c930dab3cefff36fcd70a6457e436d09888a070c8",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://7ceabd5fb354d223d9d0a3c490984a981a3d36dfdec58514f1a8e559b5769eb5",
+				"dweb:/ipfs/QmRYCQrd34wbbtnyWLjxwxKkSdBbDCSVaaJgDnnUyqfTHm"
+			]
+		},
+		"contracts/Lottery.sol": {
+			"keccak256": "0x68271cf3e44cc74e0a65d1073480cc467f6c08d81a95b28efae891fb4655cc67",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://7ca9e458eb1c8db64fb8615302587b52783b32a178921517740751bc7f39b811",
+				"dweb:/ipfs/QmWWUBkF74iNKUQE77LkzGmDVaKe1cXmZr6YEhLoGn4zTv"
+			]
+		}
+	},
+	"version": 1
+}
