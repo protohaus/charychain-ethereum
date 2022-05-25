@@ -6,6 +6,7 @@ import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contr
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/IERC20.sol";
 
 import "./IVoting.sol"; 
+import "./ILottery.sol"; 
 
 contract Spendenpool{
     //variables 
@@ -14,9 +15,12 @@ contract Spendenpool{
     address[] public voters; //temporary to chekc if working
     address payable[] public projects; //struct projects with address and id? 
     address public votingcontract; 
+    address public lotterycontract; 
+    address payable public lotterywinner; 
     uint donations; 
     bool donationsopen = true; 
     uint public startTime = block.timestamp;
+
     
 
     //constructor 
@@ -49,6 +53,10 @@ contract Spendenpool{
         //initiate voting with this address
         votingcontract = _votingAddress; 
     }
+
+    function initiateLottery(address _lotteryContract) external {
+        lotterycontract = _lotteryContract; 
+    }
     //donations of donators 
     function donate() payable public {
         //minimum value? 
@@ -76,21 +84,22 @@ contract Spendenpool{
     
     //getbalance of CT in this contract, careful contract address changes when deploying!! 
     function getCTBalance() public view onlyCharyteam returns(uint) {
-        return IERC20(0xD4Fc541236927E2EAf8F27606bD7309C1Fc2cbee).balanceOf(address(this));
+        return IERC20(0xB302F922B24420f3A3048ddDC4E2761CE37Ea098).balanceOf(address(this));
     }
 
     //send charity token to donator after donation 
     function sendCT() payable public {
         //require balance CT = 0 
-        uint tempCT = IERC20(0xD4Fc541236927E2EAf8F27606bD7309C1Fc2cbee).balanceOf(msg.sender);
+        uint tempCT = IERC20(0xB302F922B24420f3A3048ddDC4E2761CE37Ea098).balanceOf(msg.sender);
         require(tempCT == 0, "sender already has a CT"); 
-        IERC20(0xD4Fc541236927E2EAf8F27606bD7309C1Fc2cbee).transfer(msg.sender, 1); 
+        IERC20(0xB302F922B24420f3A3048ddDC4E2761CE37Ea098).transfer(msg.sender, 1); 
     }
 
 
     //after 3month close donations  
     function closeDonations() public {
-        if (donationsopen == true && block.timestamp >= startTime + 30 days) donationsopen = false; 
+        //if (donationsopen == true && block.timestamp >= startTime + 30 days) donationsopen = false; 
+        donationsopen = false; 
     }
 
     //get result of voting //after donations are closed
@@ -99,15 +108,25 @@ contract Spendenpool{
         return v.getVotingWinner(); 
     }
 
-    function activateLottery() payable public donationsclosed {
+    //gives donors in array to lottery contract and returns the random winner of the donors 
+    function doLottery() payable public donationsclosed returns(address) {
+        ILottery l = ILottery(lotterycontract); 
+        l.enterLottery(donators);
+        lotterywinner = payable(l.getWinner()); 
+        return lotterywinner; 
         //initialize lottery contract 
         //send 10% of balance to lottery contract 
     }
 
-    function sendDonations() payable public donationsclosed onlyCharyteam {
-        //implement 
+    function sendWinn() payable public donationsclosed onlyCharyteam {
+        uint thisamount = address(this).balance; 
+        uint lotteryamount = thisamount / 100 * 10; 
+        lotterywinner.transfer(lotteryamount); 
     }
-
+    function sendDonations() payable public donationsclosed onlyCharyteam {
+        uint thisamount = address(this).balance; 
+        //get winner project address and send 
+    }
 
 
 }

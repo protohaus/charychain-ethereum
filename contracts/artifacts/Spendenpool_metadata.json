@@ -12,13 +12,6 @@
 			},
 			{
 				"inputs": [],
-				"name": "activateLottery",
-				"outputs": [],
-				"stateMutability": "payable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
 				"name": "charyteam",
 				"outputs": [
 					{
@@ -35,6 +28,19 @@
 				"name": "closeDonations",
 				"outputs": [],
 				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "doLottery",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "payable",
 				"type": "function"
 			},
 			{
@@ -93,6 +99,19 @@
 				"inputs": [
 					{
 						"internalType": "address",
+						"name": "_lotteryContract",
+						"type": "address"
+					}
+				],
+				"name": "initiateLottery",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
 						"name": "_votingAddress",
 						"type": "address"
 					}
@@ -100,6 +119,32 @@
 				"name": "initiateVoting",
 				"outputs": [],
 				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "lotterycontract",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "lotterywinner",
+				"outputs": [
+					{
+						"internalType": "address payable",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -131,6 +176,13 @@
 			{
 				"inputs": [],
 				"name": "sendDonations",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "sendWinn",
 				"outputs": [],
 				"stateMutability": "payable",
 				"type": "function"
@@ -234,6 +286,14 @@
 		"remappings": []
 	},
 	"sources": {
+		"contracts/ILottery.sol": {
+			"keccak256": "0x16f9b0801cda2599f49be580adc2ff69e14b3c86df991565fd06447b97b4ef28",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://c9d2b7d8536accf876d610afffe5a19040205acc6a86fe72ed1dead4a41289ff",
+				"dweb:/ipfs/QmYbocunckEyiJnnctesg5Tzrbw6RMYnn23HtG5NLUVDv9"
+			]
+		},
 		"contracts/IVoting.sol": {
 			"keccak256": "0x109292d9b8fe6603bfb53db3f70d4eef4b6af88ba9e9a692b348b297babb592d",
 			"license": "MIT",
@@ -243,11 +303,11 @@
 			]
 		},
 		"contracts/donationspool.sol": {
-			"keccak256": "0x386e1bd73b30a5ffd6958254a4a57eccb697ed6404adef5a66dece3b1de2d1e7",
+			"keccak256": "0xc2441acdc37ae0f459777551def888f7efb897ac9cec9be3e44844c05ddfb936",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://169c280e838c1ec563d05d4b4ef56a298c6aa278bab180c21227cdb1866f0b4b",
-				"dweb:/ipfs/QmYfnNMvz9LUHeje3Gkpcoxb1zk3Mj3E17whDy7s5j9Nvx"
+				"bzz-raw://7af6ad2b4fbc940c9fee2463e33da2e704267c4a49f2e466fea78cb9261f9c90",
+				"dweb:/ipfs/QmRDwEkwEi4vx3UHqubEMMYhUBXUo338ndxFHDCYLpiRvu"
 			]
 		},
 		"https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/ERC20.sol": {

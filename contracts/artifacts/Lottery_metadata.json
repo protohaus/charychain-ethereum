@@ -35,11 +35,6 @@
 						"internalType": "address[]",
 						"name": "_donators",
 						"type": "address[]"
-					},
-					{
-						"internalType": "bytes32",
-						"name": "_sealedSeed",
-						"type": "bytes32"
 					}
 				],
 				"name": "enterLottery",
@@ -54,13 +49,7 @@
 				"type": "function"
 			},
 			{
-				"inputs": [
-					{
-						"internalType": "bytes32",
-						"name": "_seed",
-						"type": "bytes32"
-					}
-				],
+				"inputs": [],
 				"name": "getWinner",
 				"outputs": [
 					{
@@ -80,6 +69,19 @@
 						"internalType": "address",
 						"name": "",
 						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "random",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
@@ -165,19 +167,19 @@
 	},
 	"sources": {
 		"contracts/ILottery.sol": {
-			"keccak256": "0xd5d5c10928ce5e41a880446c930dab3cefff36fcd70a6457e436d09888a070c8",
+			"keccak256": "0x16f9b0801cda2599f49be580adc2ff69e14b3c86df991565fd06447b97b4ef28",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://7ceabd5fb354d223d9d0a3c490984a981a3d36dfdec58514f1a8e559b5769eb5",
-				"dweb:/ipfs/QmRYCQrd34wbbtnyWLjxwxKkSdBbDCSVaaJgDnnUyqfTHm"
+				"bzz-raw://c9d2b7d8536accf876d610afffe5a19040205acc6a86fe72ed1dead4a41289ff",
+				"dweb:/ipfs/QmYbocunckEyiJnnctesg5Tzrbw6RMYnn23HtG5NLUVDv9"
 			]
 		},
 		"contracts/Lottery.sol": {
-			"keccak256": "0xcb09bbd3b4e3692cb7b40fd244a2b1767a63d17bb934760b9d9722753e031af7",
+			"keccak256": "0xe9d0c89572ce3cfdd071f1fc43f67b859eee7643ab6566a163519b9647c99303",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://1bc1148dc7f5436e29be0d7991ce584aaf733e49289f9e4a70bfb08663455bab",
-				"dweb:/ipfs/QmQLsezk1UT4PQdmxJSvuqF293qmqop7Uc8djGTkJeDYV4"
+				"bzz-raw://982e88e26af642da97a28a74f6378b8496a84a0610efa1cd61b053f3abc80711",
+				"dweb:/ipfs/QmaeFp4gMQPzjR74CuC3xeC7o7Km5NNaJYPrCKiCzsuGgW"
 			]
 		}
 	},

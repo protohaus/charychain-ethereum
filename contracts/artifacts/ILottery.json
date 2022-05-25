@@ -49,8 +49,8 @@
 		},
 		"gasEstimates": null,
 		"methodIdentifiers": {
-			"enterLottery(address[],bytes32)": "5c6b143c",
-			"getWinner(bytes32)": "1e5f9149"
+			"enterLottery(address[])": "c129800d",
+			"getWinner()": "8e7ea5b2"
 		}
 	},
 	"abi": [
@@ -60,11 +60,6 @@
 					"internalType": "address[]",
 					"name": "_donators",
 					"type": "address[]"
-				},
-				{
-					"internalType": "bytes32",
-					"name": "_sealedSeed",
-					"type": "bytes32"
 				}
 			],
 			"name": "enterLottery",
@@ -79,13 +74,7 @@
 			"type": "function"
 		},
 		{
-			"inputs": [
-				{
-					"internalType": "bytes32",
-					"name": "_sealedSeed",
-					"type": "bytes32"
-				}
-			],
+			"inputs": [],
 			"name": "getWinner",
 			"outputs": [
 				{

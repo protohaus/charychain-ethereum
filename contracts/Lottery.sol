@@ -15,19 +15,26 @@ contract Lottery is ILottery{
     constructor(){
         managerpool = msg.sender; 
         seedSet = false;
-        donationsClosed = false; 
+        donationsClosed = false;  
     }
 
-
-    function enterLottery(address[] memory _donators, bytes32 _sealedSeed) external returns (bool){
+    //implement later 
+    /*function enterLottery(address[] memory _donators, bytes32 _sealedSeed) external returns (bool){
         donors = _donators; 
         setSealedSeed(_sealedSeed); 
         return true; 
-    }
+    }*/
 
-    function getWinner(bytes32 _seed) external returns(address){
-        uint random = reveal(_seed); 
-        return msg.sender; //mit rando  aus donors array den gewinner bestimmen
+    function enterLottery(address[] memory _donators) external returns (bool){
+        donors = _donators; 
+        return true; 
+    }
+    // Implement later with seeds: function getWinner(bytes32 _seed) external returns(address){
+    function getWinner() external returns(address){
+        //uint random = reveal(_seed); 
+        uint numberwinner = random(); 
+        address winner = donors[numberwinner]; 
+        return winner; 
     }
 
     function setSealedSeed(bytes32 _sealedSeed) public {
@@ -48,9 +55,17 @@ contract Lottery is ILottery{
         //require(keccak256(msg.sender, _seed) == sealedSeed); 
         return random; 
     }
+    //works with 66bytes 
     function test(bytes32 _test) public returns(bool) {
         //sealedSeed = abi.encodePacked(_test); 
         return true; 
+    }
+    //pseudo random number for testing
+    function random() public view returns (uint){
+        uint thisrandom; 
+        thisrandom = uint(keccak256(abi.encodePacked(block.difficulty, block.timestamp, donors)));
+        uint winner = thisrandom%donors.length; 
+        return winner; 
     }
 
 }
