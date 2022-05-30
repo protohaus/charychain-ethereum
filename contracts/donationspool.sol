@@ -1,9 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity = 0.8.13; 
 
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/ERC20.sol";
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/extensions/ERC20Burnable.sol";
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 import "./IVoting.sol"; 
 import "./ILottery.sol"; 
@@ -84,15 +83,16 @@ contract Spendenpool{
     
     //getbalance of CT in this contract, careful contract address changes when deploying!! 
     function getCTBalance() public view onlyCharyteam returns(uint) {
-        return IERC20(0xB302F922B24420f3A3048ddDC4E2761CE37Ea098).balanceOf(address(this));
+        return IERC20(0xED4c5a8BDA0081CfaFA5B74bb5a0bd82A4CD2c09).balanceOf(address(this));
     }
+    
 
     //send charity token to donator after donation 
     function sendCT() payable public {
         //require balance CT = 0 
-        uint tempCT = IERC20(0xB302F922B24420f3A3048ddDC4E2761CE37Ea098).balanceOf(msg.sender);
+        uint tempCT = IERC20(0xED4c5a8BDA0081CfaFA5B74bb5a0bd82A4CD2c09).balanceOf(msg.sender);
         require(tempCT == 0, "sender already has a CT"); 
-        IERC20(0xB302F922B24420f3A3048ddDC4E2761CE37Ea098).transfer(msg.sender, 1); 
+        IERC20(0xED4c5a8BDA0081CfaFA5B74bb5a0bd82A4CD2c09).transfer(msg.sender, 1); 
     }
 
 

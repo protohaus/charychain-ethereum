@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity = 0.8.13; 
 
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 import "./IVoting.sol"; 
 
@@ -11,7 +11,6 @@ contract Voting is IVoting{
     uint[] public projectids; //could also be accounts? 
     uint numberofdonators; 
     uint countervoters; 
-    address public donationspool; 
     address[] public donators;
     mapping(uint => uint) public votesofprojects; 
     uint currentCTBalance; 
@@ -22,16 +21,20 @@ contract Voting is IVoting{
     
 
     //constructor with donationspool
-    constructor (address _donationspool, uint[] memory _projectids) {
-        donationspool = _donationspool; 
-        projectids = _projectids; 
+    constructor () { 
         currentCTBalance = 0; 
         numberofdonators = 0; 
         countervoters = 0; 
-        numberofprojects = _projectids.length; 
-        emptyBallot();
     }
 
+   
+    function setProjectIds(uint[] memory _projectids) external returns(bool){
+        projectids = _projectids; 
+        numberofprojects = _projectids.length; 
+        emptyBallot();
+        return true; 
+    }
+   
     //reminder: ask for key to get value! 
     //puts ids as keys with initial value into mapping 
     function emptyBallot() public {
@@ -42,8 +45,9 @@ contract Voting is IVoting{
         }
     }
 
+
     function receiveVote(uint _idProject) public {
-        uint tempCTbalance = IERC20(0xD4Fc541236927E2EAf8F27606bD7309C1Fc2cbee).balanceOf(msg.sender); 
+        uint tempCTbalance = IERC20(0xED4c5a8BDA0081CfaFA5B74bb5a0bd82A4CD2c09).balanceOf(msg.sender); 
         require (tempCTbalance == 1, "donator has no CT, no voting possible"); 
         require (idcorrect(_idProject) == true, "id not valid"); 
         uint tempVote = votesofprojects[_idProject]; 

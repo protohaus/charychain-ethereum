@@ -46,7 +46,7 @@ contract Lottery is ILottery{
         seedSet = true; 
     }
 
-    function reveal(bytes32 _seed) public returns (uint){
+    /*function reveal(bytes32 _seed) public returns (uint){
         require(seedSet, "seed is not yet set"); 
         require(donationsClosed, "donations are not closed yet"); 
         require(storedBlockNumber < block.number); 
@@ -54,7 +54,7 @@ contract Lottery is ILottery{
         uint random = uint(keccak256(abi.encode(_seed, blockhash(storedBlockNumber))));
         //require(keccak256(msg.sender, _seed) == sealedSeed); 
         return random; 
-    }
+    }*/
     //works with 66bytes 
     function test(bytes32 _test) public returns(bool) {
         //sealedSeed = abi.encodePacked(_test); 
