@@ -75,7 +75,6 @@ contract Spendenpool{
         //keeping track of the Donators 
         donators.push(msg.sender); 
         sendCT(msg.sender); 
-        //emit event here 
     }
 
 
@@ -105,7 +104,6 @@ contract Spendenpool{
         uint tempCT = IERC20(ctcontract).balanceOf(_donor);
         require(tempCT == 0, "sender already has a CT"); 
         IERC20(ctcontract).transfer(_donor, 1); 
-        IERC20(ctcontract).approve(address(this), 1); //addapt approve function? 
     }
 
     //do a Vote for a Project id

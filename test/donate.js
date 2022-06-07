@@ -58,7 +58,7 @@ contract("function donate() test", (accounts) => {
 
         await DPinstance.initiateVoting(Vinstance.address); 
         await Vinstance.emptyBallot.call(); 
-        await Vinstance.setCTaddress(CTcontract.address); 
+        //await Vinstance.setCTaddress(CTcontract.address); 
 
         await Vinstance.receiveVote(2, {
             from: accounts[2],
@@ -98,7 +98,7 @@ contract("function donate() test", (accounts) => {
         
         await DPinstance.initiateVoting(Vinstance.address); 
         await Vinstance.emptyBallot.call(); 
-        await Vinstance.setCTaddress(CTcontract2.address); 
+        //await Vinstance.setCTaddress(CTcontract2.address); 
 
         await Vinstance.receiveVote(2, {
             from: accounts[5],
@@ -125,7 +125,8 @@ contract("function donate() test", (accounts) => {
         const currentvoting2 = await Vinstance.showcurrentVotes.call(4); 
         assert.equal(currentvoting2.toString(), "1", "Voting updated successfully"); 
  
-        const winnerproject = await Vinstance.returnVotingWinner.call();  
+        await Vinstance.returnVotingWinner(); 
+        const winnerproject = await Vinstance.getVotingWinner.call();  
         assert.equal(winnerproject.toString(), "2", "Winnerid is right"); 
     }); 
     

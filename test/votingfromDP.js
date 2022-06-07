@@ -1,6 +1,7 @@
 const donationspool = artifacts.require("Spendenpool");
 const charytoken = artifacts.require("CharyToken"); 
 const voting = artifacts.require("Voting"); 
+const lottery = artifacts.require("Lottery"); 
 
 contract("test voting from DP", (accounts) => {
     it("donate and compare votes", async () => {
@@ -72,4 +73,27 @@ contract("test voting from DP", (accounts) => {
         assert.equal(ct1.toString(), "0", "Ct was reverted to 0"); 
 
     });
+    it("lottery from DP", async () => {
+        const CTcontract = await charytoken.deployed(); 
+        const DPinstance = await donationspool.deployed();
+        const Vinstance = await voting.deployed();
+        const Linstance = await lottery.deployed(); 
+
+        const donor1 = await DPinstance.donators.call(0); 
+        assert.equal(donor1.toString(), accounts[2]); 
+        await DPinstance.initiateLottery(Linstance.address); 
+        await DPinstance.startLottery();
+        await DPinstance.closeDonations(); 
+        await DPinstance.doLottery(); 
+
+        //check balance 
+        const contractbalance = await web3.eth.getBalance(DPinstance.address); 
+        const contractbalanceineth = web3.utils.fromWei(contractbalance, 'ether');  
+        assert.equal(contractbalanceineth.toString(), "0.6", "right balance"); 
+
+        //get winner
+        const lotterywinner = await DPinstance.lotterywinner.call(); 
+        console.log("lotterywinner:" + lotterywinner); 
+        await DPinstance.sendWinn(); 
+    })
 });
