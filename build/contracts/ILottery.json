@@ -43,7 +43,7 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "// SPDX-License-Identifier: MIT\r\npragma solidity = 0.8.13; \r\n\r\n//interface of Lottery so that new lottery can be started once timing is ready\r\ninterface ILottery{\r\n    //function enterLottery(address[] memory _donators, bytes32 _sealedSeed) external returns (bool); \r\n    function enterLottery(address[] memory _donators) external returns (bool); \r\n    function getWinner() external returns(address); \r\n}",
-  "sourcePath": "C:\\Users\\annet\\Documents\\TU BS\\Masterarbeit\\Charychaintest\\contracts\\ILottery.sol",
+  "sourcePath": "C:\\Users\\annet\\Documents\\TU BS\\Masterarbeit\\charychaintest\\contracts\\ILottery.sol",
   "ast": {
     "absolutePath": "project:/contracts/ILottery.sol",
     "exportedSymbols": {
@@ -244,7 +244,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.7",
-  "updatedAt": "2022-06-04T12:41:43.193Z",
+  "updatedAt": "2022-06-07T12:27:48.676Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

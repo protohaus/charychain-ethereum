@@ -61,22 +61,29 @@ contract Spendenpool{
     function setCTaddress(address _CTContract) external {
         ctcontract = _CTContract; 
     }
+
+    function setVotingProjectIds(uint[] memory _projectids) external returns(bool){
+        IVoting v = IVoting(votingcontract); 
+        return v.setProjectIds(_projectids);
+    }
+
+
     //donations of donators 
     function donate() external payable {
         //minimum value? 
         require(msg.value >= 0.00000001 ether, "Invest minimum of 0.1 ether");
         //keeping track of the Donators 
         donators.push(msg.sender); 
-        sendCT(); 
+        sendCT(msg.sender); 
         //emit event here 
     }
 
 
-    function updateVoting() public returns(address[] memory){
+    function updateVoting() public returns(bool){
         //update number of donators (or off-chain)? 
         IVoting v = IVoting(votingcontract); 
         voters = v.getVoters(); //wo speichern 
-        return voters; 
+        return true;  
     }
 
     //getbalance 
@@ -93,13 +100,34 @@ contract Spendenpool{
     
 
     //send charity token to donator after donation 
-    function sendCT() payable public {
+    function sendCT(address _donor) payable public {
         //require balance CT = 0 
-        uint tempCT = IERC20(ctcontract).balanceOf(msg.sender);
+        uint tempCT = IERC20(ctcontract).balanceOf(_donor);
         require(tempCT == 0, "sender already has a CT"); 
-        IERC20(ctcontract).transfer(msg.sender, 1); 
+        IERC20(ctcontract).transfer(_donor, 1); 
+        IERC20(ctcontract).approve(address(this), 1); //addapt approve function? 
     }
 
+    //do a Vote for a Project id
+    function doVoting(uint _idProject) public returns(bool) {
+        IVoting v = IVoting(votingcontract);
+        uint tempCTbalance = IERC20(ctcontract).balanceOf(msg.sender); 
+        require (tempCTbalance == 1, "donator has no CT, no voting possible");
+        v.doVote(_idProject, msg.sender); 
+        retreiveCT(msg.sender);
+        return true; 
+    }
+
+    function retreiveCT(address _voter) payable public {
+        uint tempCT = IERC20(ctcontract).balanceOf(_voter);
+        require (tempCT == 1, "sender has no CT, no retreiving"); 
+        IERC20(ctcontract).transferFrom(_voter, address(this), 1); 
+    }
+
+    function getcurrentVote(uint _idProject) public returns(uint) {
+        IVoting v = IVoting(votingcontract); //kann ich auch einmalig im constructor Voting mahcne? 
+        return v.showcurrentVotes(_idProject); 
+    }
 
     //after 3month close donations  
     function closeDonations() public {
@@ -110,6 +138,7 @@ contract Spendenpool{
     //get result of voting //after donations are closed
     function votingresult() public returns (uint) {
         IVoting v = IVoting(votingcontract); 
+        v.returnVotingWinner(); 
         return v.getVotingWinner(); 
     }
 

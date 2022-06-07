@@ -7,4 +7,7 @@ interface IVoting{
     function showcurrentVotes(uint _idProject) external returns(uint);
     function getVotingWinner() external returns(uint); 
     function setProjectIds(uint[] memory _projectids) external returns(bool); 
+    function receiveVote(uint _idProject) external returns (bool); 
+    function returnVotingWinner() external returns(bool); 
+    function doVote(uint _idProject, address voter) external returns(bool); 
 }
