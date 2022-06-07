@@ -12,7 +12,7 @@ contract("function donate() test", (accounts) => {
         await CTcontract.transfer(instance.address, "200"); 
         //const sender = await accounts[3].address; 
         await instance.donate({
-            from: "0x2FdDd9a84f67DDCaF69AF34Ad403E3985537a51D", 
+            from: accounts[1], 
             to: instance.address,
             value: etheramount}); //menge ether? 
         const donor = await instance.donators.call(0);
