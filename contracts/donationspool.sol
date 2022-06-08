@@ -15,10 +15,12 @@ contract Spendenpool{
     address payable[] public projects; //struct projects with address and id? 
     address public votingcontract; 
     address public lotterycontract; 
+    address public ctcontract; 
     address payable public lotterywinner; 
     uint donations; 
     bool donationsopen = true; 
     uint public startTime = block.timestamp;
+    uint public lotterymoney; 
 
     
 
@@ -56,22 +58,32 @@ contract Spendenpool{
     function initiateLottery(address _lotteryContract) external {
         lotterycontract = _lotteryContract; 
     }
-    //donations of donators 
-    function donate() payable public {
-        //minimum value? 
-        require(msg.value >= 0.1 ether, "Invest minimum of 0.1 ether");
-        //keeping track of the Donators 
-        donators.push(msg.sender); 
-        sendCT(); 
-        //emit event here 
+    function setCTaddress(address _CTContract) external {
+        ctcontract = _CTContract; 
+    }
+
+    function setVotingProjectIds(uint[] memory _projectids) external returns(bool){
+        IVoting v = IVoting(votingcontract); 
+        return v.setProjectIds(_projectids);
     }
 
 
-    function updateVoting() public returns(address[] memory){
+    //donations of donators 
+    function donate() external payable {
+        //minimum value? 
+        require(msg.value >= 0.00000001 ether, "Invest minimum of 0.1 ether");
+        //keeping track of the Donators 
+        donators.push(msg.sender); 
+        sendCT(msg.sender); 
+        IERC20(ctcontract).approve(address(this), 1); 
+    }
+
+
+    function updateVoting() public returns(bool){
         //update number of donators (or off-chain)? 
         IVoting v = IVoting(votingcontract); 
         voters = v.getVoters(); //wo speichern 
-        return voters; 
+        return true;  
     }
 
     //getbalance 
@@ -83,18 +95,38 @@ contract Spendenpool{
     
     //getbalance of CT in this contract, careful contract address changes when deploying!! 
     function getCTBalance() public view onlyCharyteam returns(uint) {
-        return IERC20(0xED4c5a8BDA0081CfaFA5B74bb5a0bd82A4CD2c09).balanceOf(address(this));
+        return IERC20(ctcontract).balanceOf(address(this));
     }
     
 
     //send charity token to donator after donation 
-    function sendCT() payable public {
+    function sendCT(address _donor) payable public {
         //require balance CT = 0 
-        uint tempCT = IERC20(0xED4c5a8BDA0081CfaFA5B74bb5a0bd82A4CD2c09).balanceOf(msg.sender);
+        uint tempCT = IERC20(ctcontract).balanceOf(_donor);
         require(tempCT == 0, "sender already has a CT"); 
-        IERC20(0xED4c5a8BDA0081CfaFA5B74bb5a0bd82A4CD2c09).transfer(msg.sender, 1); 
+        IERC20(ctcontract).transfer(_donor, 1); 
     }
 
+    //do a Vote for a Project id
+    function doVoting(uint _idProject) public returns(bool) {
+        IVoting v = IVoting(votingcontract);
+        uint tempCTbalance = IERC20(ctcontract).balanceOf(msg.sender); 
+        require (tempCTbalance == 1, "donator has no CT, no voting possible");
+        v.doVote(_idProject, msg.sender); 
+        retreiveCT(msg.sender);
+        return true; 
+    }
+
+    function retreiveCT(address _voter) payable public {
+        uint tempCT = IERC20(ctcontract).balanceOf(_voter);
+        require (tempCT == 1, "sender has no CT, no retreiving"); 
+        IERC20(ctcontract).transferFrom(_voter, address(this), 1); 
+    }
+
+    function getcurrentVote(uint _idProject) public returns(uint) {
+        IVoting v = IVoting(votingcontract); //kann ich auch einmalig im constructor Voting mahcne? 
+        return v.showcurrentVotes(_idProject); 
+    }
 
     //after 3month close donations  
     function closeDonations() public {
@@ -105,28 +137,35 @@ contract Spendenpool{
     //get result of voting //after donations are closed
     function votingresult() public returns (uint) {
         IVoting v = IVoting(votingcontract); 
+        v.returnVotingWinner(); 
         return v.getVotingWinner(); 
+    }
+
+    function startLottery() public {
+        ILottery l = ILottery(lotterycontract); 
+        l.enterLottery(donators);
     }
 
     //gives donors in array to lottery contract and returns the random winner of the donors 
     function doLottery() payable public donationsclosed returns(address) {
         ILottery l = ILottery(lotterycontract); 
-        l.enterLottery(donators);
+        //l.enterLottery(donators);
         lotterywinner = payable(l.getWinner()); 
         return lotterywinner; 
         //initialize lottery contract 
         //send 10% of balance to lottery contract 
     }
 
-    function sendWinn() payable public donationsclosed onlyCharyteam {
+    function sendWinn() payable public donationsclosed onlyCharyteam  {
         uint thisamount = address(this).balance; 
-        uint lotteryamount = thisamount / 100 * 10; 
-        lotterywinner.transfer(lotteryamount); 
+        lotterymoney = thisamount / 100 * 10; 
+        lotterywinner.transfer(lotterymoney); 
     }
     function sendDonations() payable public donationsclosed onlyCharyteam {
         uint thisamount = address(this).balance; 
         //get winner project address and send 
     }
-
+    fallback() external payable{
+    }
 
 }

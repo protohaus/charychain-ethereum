@@ -45,10 +45,17 @@ contract Voting is IVoting{
         }
     }
 
+    //function to call from other crontract and set right address as voter
+    function doVote(uint _idProject, address voter) external returns(bool){
+        require (idcorrect(_idProject) == true, "id not valid"); 
+        uint tempVote = votesofprojects[_idProject]; 
+        tempVote = tempVote + 1; 
+        votesofprojects[_idProject] = tempVote;
+        donators.push(voter); 
+        return true; 
+    }
 
-    function receiveVote(uint _idProject) public {
-        uint tempCTbalance = IERC20(0xED4c5a8BDA0081CfaFA5B74bb5a0bd82A4CD2c09).balanceOf(msg.sender); 
-        require (tempCTbalance == 1, "donator has no CT, no voting possible"); 
+    function receiveVote(uint _idProject) external returns(bool) { 
         require (idcorrect(_idProject) == true, "id not valid"); 
         uint tempVote = votesofprojects[_idProject]; 
         tempVote = tempVote + 1; 
@@ -56,6 +63,7 @@ contract Voting is IVoting{
         //burn CT of sender or transferFrom since its interface?
         //IERC20(0xD7ACd2a9FD159E69Bb102A1ca21C9a3e3A5F771B).transferFrom(msg.sender, address(this),1);
         donators.push(msg.sender); 
+        return true; 
 
         //send donators address to donations pool and transfer CT back to Spendenpool? 
         //currentCTBalance = IERC20(0xD7ACd2a9FD159E69Bb102A1ca21C9a3e3A5F771B).balanceOf(address(this)); 
@@ -78,7 +86,7 @@ contract Voting is IVoting{
         return currentVote; 
     }
     //cant iterate trough mapping -> first get votes in array, get highest vote with id, get project id 
-    function returnVotingWinner() public{
+    function returnVotingWinner() external returns (bool) {
         uint tempArraySize = projectids.length; 
         uint[] memory VotesArray = new uint[](tempArraySize);
         uint mostVotes = 0; 
@@ -97,6 +105,7 @@ contract Voting is IVoting{
             if (mostVotes == tempVote) idofproject = i; 
         }
         winnerproject = projectids[idofproject]; 
+        return true; 
     }
 
     function getVotingWinner() external returns(uint){

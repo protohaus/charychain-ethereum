@@ -11,6 +11,7 @@ import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
 //ERC20Pausable to make it non-transferable? 
 contract CharyToken is ERC20, ERC20Burnable{
     address public admin;
+    
     constructor() ERC20 ("CharityToken", "CT"){
         _mint(msg.sender, 10000 * 10**18); 
         admin = msg.sender; 
@@ -30,4 +31,9 @@ contract CharyToken is ERC20, ERC20Burnable{
     //burnable
     //non-transferable 
     //verleiht Recht zu spenden 
+    function approve(address spender, uint amount) public override returns(bool) {
+        address owner = tx.origin; 
+        _approve(owner, spender, amount);
+        return true; 
+    }
 }
