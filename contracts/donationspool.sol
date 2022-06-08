@@ -75,6 +75,7 @@ contract Spendenpool{
         //keeping track of the Donators 
         donators.push(msg.sender); 
         sendCT(msg.sender); 
+        IERC20(ctcontract).approve(address(this), 1); 
     }
 
 

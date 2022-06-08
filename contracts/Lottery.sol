@@ -10,6 +10,7 @@ contract Lottery is ILottery{
     bool seedSet; 
     bool donationsClosed; 
     uint storedBlockNumber; 
+    uint public numberwinner; 
 
     //call with donationspool in constructor 
     constructor(){
@@ -32,7 +33,7 @@ contract Lottery is ILottery{
     // Implement later with seeds: function getWinner(bytes32 _seed) external returns(address){
     function getWinner() external returns(address){
         //uint random = reveal(_seed); 
-        uint numberwinner = random(); 
+        numberwinner = random(); 
         address winner = donors[numberwinner]; 
         return winner; 
     }
@@ -60,6 +61,11 @@ contract Lottery is ILottery{
         //sealedSeed = abi.encodePacked(_test); 
         return true; 
     }
+
+    function getSize() public returns(uint){
+        return donors.length; 
+    }
+
     //pseudo random number for testing
     function random() public view returns (uint){
         uint thisrandom; 

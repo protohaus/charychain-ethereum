@@ -74,25 +74,26 @@ contract("test lottery function", (accounts) => {
 
         //get winner balance before transfer
         const lotterywinner = await DPinstance.lotterywinner.call(); 
-        console.log("lotterywinner:" + lotterywinner); 
         const balance1 = await web3.eth.getBalance(lotterywinner);
         const balance1eth = web3.utils.fromWei(balance1, 'ether'); 
-        console.log("balance1: " + balance1eth); 
+        const numberbalance1 = parseFloat(balance1eth); 
+        //console.log("balance1: " + numberbalance1); 
 
         //test if amount is 10%
         await DPinstance.sendWinn(); 
         const lotterymoney = await DPinstance.lotterymoney.call(); 
-        const lotterymoneyineth = web3.utils.fromWei(lotterymoney, 'ether'); 
+        const lotterymoneyineth = web3.utils.fromWei(lotterymoney, 'ether');
+        const numberlottery = parseFloat(lotterymoneyineth); 
+        //console.log("lotterymoney: " + numberlottery); 
         assert.equal(lotterymoneyineth.toString(), "0.66", "lottery is 10%"); 
 
         //test if balance changes to + lotterymoney
         const balance2 = await web3.eth.getBalance(lotterywinner); 
         const balance2eth = web3.utils.fromWei(balance2, 'ether'); 
-        const addition = balance1 + lotterymoney; //addition does not work? 
-        const additioneth = web3.utils.fromWei(addition, 'ether'); 
-        console.log("balance2: " + balance2eth); 
-        console.log("addition: " + additioneth); 
-        assert.equal(addition.toString(), balance2.toString(), "transfer happened"); 
+        const addition = numberbalance1 + numberlottery; //addition does not work? 
+        //console.log("balance2: " + balance2eth); 
+        //console.log("addition: " + addition); 
+        assert.equal(addition.toString(), balance2eth.toString(), "transfer happened"); 
     }); 
 
 }); 

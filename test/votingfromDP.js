@@ -20,28 +20,16 @@ contract("test voting from DP", (accounts) => {
             to: DPinstance.address,
             value: etheramount});
         
-        //set approvin for account of donor (how in contract??)
-        await CTcontract.approve(DPinstance.address, 1, {
-            from: accounts[2], 
-        }); 
-        
         await DPinstance.donate({
             from: accounts[3],
             to: DPinstance.address, 
             value: etheramount}); 
-        
-        await CTcontract.approve(DPinstance.address, 1, {
-            from: accounts[3], 
-        }); 
-        
+    
         await DPinstance.donate({
             from: accounts[4],
             to: DPinstance.address, 
             value: etheramount}); 
-        
-        await CTcontract.approve(DPinstance.address, 1, {
-            from: accounts[4], 
-        }); 
+       
         //three accounts vote 
         await DPinstance.doVoting(4, {
             from: accounts[2],
@@ -93,7 +81,16 @@ contract("test voting from DP", (accounts) => {
 
         //get winner
         const lotterywinner = await DPinstance.lotterywinner.call(); 
-        console.log("lotterywinner:" + lotterywinner); 
         await DPinstance.sendWinn(); 
+
+        //test if random number is within array length
+        const arraylength = await Linstance.getSize.call();
+        const winnerint = await Linstance.numberwinner.call(); 
+        if (winnerint > arraylength){
+            throw new Error("random in is too big for donors array"); 
+        }; 
+        if (winnerint < 0){
+            throw new Error("random can not be negative"); 
+        };
     })
 });
