@@ -6,13 +6,13 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 import "./IVoting.sol"; 
 import "./ILottery.sol"; 
-
+//Main contract to handle other contracts for all donations-service functions 
 contract Spendenpool{
     //variables 
     address public charyteam; 
-    address[] public donators; //payable not neccessary within address? 
+    address[] public donators;
     address[] public voters; //temporary to chekc if working
-    address payable[] public projects; //struct projects with address and id? 
+    address payable[] public projects; 
     address public votingcontract; 
     address public lotterycontract; 
     address public ctcontract; 
@@ -44,7 +44,7 @@ contract Spendenpool{
         _;
     }
 
-    //events to the frontend 
+    //events to the frontend, not included in this implementation
     //event Donator donated (adrdess, uint amount); 
 
 
@@ -54,14 +54,15 @@ contract Spendenpool{
         //initiate voting with this address
         votingcontract = _votingAddress; 
     }
-
+    //set lottery contract to access its functions
     function initiateLottery(address _lotteryContract) external {
         lotterycontract = _lotteryContract; 
     }
+    //set CT contract to access its functions
     function setCTaddress(address _CTContract) external {
         ctcontract = _CTContract; 
     }
-
+    
     function setVotingProjectIds(uint[] memory _projectids) external returns(bool){
         IVoting v = IVoting(votingcontract); 
         return v.setProjectIds(_projectids);
