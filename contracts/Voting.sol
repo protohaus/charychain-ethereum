@@ -5,7 +5,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 import "./IVoting.sol"; 
 
-
+//contract to cover all functions that are related to the voting mechanism
 contract Voting is IVoting{
     //variables 
     uint[] public projectids; //could also be accounts? 
@@ -64,9 +64,6 @@ contract Voting is IVoting{
         //IERC20(0xD7ACd2a9FD159E69Bb102A1ca21C9a3e3A5F771B).transferFrom(msg.sender, address(this),1);
         donators.push(msg.sender); 
         return true; 
-
-        //send donators address to donations pool and transfer CT back to Spendenpool? 
-        //currentCTBalance = IERC20(0xD7ACd2a9FD159E69Bb102A1ca21C9a3e3A5F771B).balanceOf(address(this)); 
     }
 
     //function to get the updated voters? 
